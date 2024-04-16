@@ -37,5 +37,3 @@ for i in range(len(usadas)):
 if(not(maria_vence)):
    print(-1) 
 
-
-
