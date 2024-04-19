@@ -1,39 +1,35 @@
 #Questão D
-#Tamanho do lado do quadrado
+
+#Tamanho do lado do quadrado e (Coordenadas do ponto de parada)
 N, x, y =  map(int, input().split())
 
 pesos = [0 for i in range(N)]
 number = N
 last = 1
-
-comparacoes = 0
-iteracoes = 0
-atribuicoes = 0
-
 for i in range(N):
-    pesos[i] = number
-    number-=1;
-    comparacoes += 2
+    pesos[i] = i+1
 
-if ((x,y) != (2**N-1, 2**N-1)):
+square_superior = [2**N//2,2**N//2]
+square_inferior = [2**N//2,2**N//2]
+
+
+if( x != 2**N//2 and y != 2**N//2):
     for i in range(N):
-        if((x,y) >= (2**i-1, 2**i-1) and (x,y) < (2**(i+1)-1,2**(i+1)-1)):
-            last = 0
+        square_superior[0] -= (2**N)//(2**(i+2))
+        square_superior[1] += (2**N)//(2**(i+2))
+        square_inferior[0] += (2**N)//(2**(i+2))
+        square_inferior[1] -= (2**N)//(2**(i+2))
+        if( x >= square_superior[0] and x <= square_inferior[0] and y >= square_inferior[1] and y <= square_superior[1]):
             print(pesos[i])
-            atribuicoes += 1
-        comparacoes += 3
-        iteracoes += 1
-    comparacoes += 1
-
+            last = 0
+            break
 else:
+    last = 0
     print(0)
 
 if(last):
-    comparacoes += 1
-    print(1)
-
-print( comparacoes, atribuicoes, iteracoes )
+    print(N)
 
 
 
- 
+
