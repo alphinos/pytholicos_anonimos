@@ -3,44 +3,59 @@
 #Tamanho do lado do quadrado e (Coordenadas do ponto de parada)
 N, x, y =  map(int, input().split())
 
-points = [[] for i in range(N+1)]
-
+points = [[0,0]for i in range(N)]
 square_center = [2**(N-1), 2**(N-1)]
+points[0] = square_center
+step = [(2**N//2)//2, (2**N//2)//2]
 
-points[0].append(square_center)
 
-def devolve_metadinha(point_a, point_b) -> list:
+def devolve_metadinha(point_a, quadrant, step) -> list:
     middle = [0,0]
-    middle[0] = (point_a[0]+point_b[0])//2
-    middle[1] = (point_a[1]+point_b[1])//2
+
+    if(quadrant == 0):
+        middle[0] = (point_a[0] - step[0])
+        middle[1] = (point_a[1] - step[1])
+    elif (quadrant == 1):
+        middle[0] = (point_a[0] - step[0])
+        middle[1] = (point_a[1] + step[1])
+    elif (quadrant == 2):
+        middle[0] = (point_a[0] + step[0])
+        middle[1] = (point_a[1] + step[1])
+    elif (quadrant == 3):
+        middle[0] = (point_a[0] + step[0])
+        middle[1] = (point_a[1] - step[1])
     
     return middle
 
-spaces = [0 for i in range(N+1)]
+def find_quadrant(point_a, point_b) -> int:
 
-if(points[0][0][0] == x and points[0][0][1] == y):
-    print(0)
-else:
-    points[1].append(devolve_metadinha(points[0][0], [0,0]))
-    points[1].append(devolve_metadinha(points[0][0], [0,2**N]))
-    points[1].append(devolve_metadinha(points[0][0], [2**N,0]))
-    points[1].append(devolve_metadinha(points[0][0], [2**N, 2**N]))
-    spaces[1] = 4
-
-    for i in range(2, N+1):
-        for j in range(spaces[i-1]):
-            if(points[i-1][j][0] == x and points[i-1][j][1] == y):
-                print(i-1)
-                break
-            else:
-                points[i].append(devolve_metadinha(points[i-1][j], [0,0]))
-                points[i].append(devolve_metadinha(points[i-1][j], [0,2**N]))
-                points[i].append(devolve_metadinha(points[i-1][j], [2**N,0]))
-                points[i].append(devolve_metadinha(points[i-1][j], [2**N, 2**N]))
-
-                spaces[i] += 4
-                
+    if(point_a[0] < point_b[0] and point_a[1] < point_b[1]):
+        return 0
+    elif (point_a[0] < point_b[0] and point_a[1] > point_b[1]):
+        return 1
+    elif (point_a[0] > point_b[0] and point_a[1] > point_b[1]):
+        return 2
+    elif (point_a[0] > point_b[0] and point_a[1] < point_b[1]):
+        return 3
+    else:
+        return -1
         
+for i in range(N-1):
+    if(points[i][0] == x and points[i][1] == y):
+        print(i)
+        break
+
+    quadrant = find_quadrant([x,y], points[i])
+    if(quadrant == -1):
+        print(N)
+        break
+
+    points[i+1] = devolve_metadinha(points[i], quadrant, step)
+    if(step[0] != 1 and step[1] != 1):
+        step = [step[0]//2, step[1]//2]
+
+if(points[N-1][0] == x and points[N-1][1] == y):
+    print(N-1)
 
 
 
@@ -80,16 +95,8 @@ else:
 
 
 
-
-
-
-
-
-
-
-
-
-
+'''Essa parte aqui foi com Deus
+    Entendemos a Questão Errada kekw'''
 
 # pesos = [0 for i in range(N)]
 # number = N
@@ -113,8 +120,3 @@ else:
 #             break
 # else:
 #     print(0)
-
-
-
-
-
