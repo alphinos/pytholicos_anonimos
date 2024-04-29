@@ -9,6 +9,7 @@ points[0] = square_center
 step = [(2**N//2)//2, (2**N//2)//2]
 
 
+#Calculará a coordenada do ponto seguinte ao ponot atual, bom base no quadrante do destino.
 def devolve_metadinha(point_a, quadrant, step) -> list:
     middle = [0,0]
 
@@ -27,6 +28,7 @@ def devolve_metadinha(point_a, quadrant, step) -> list:
     
     return middle
 
+#Calcula em qual quadrante está o ponto de destino com base no ponto atual, começando do ponto autal sendo o centro
 def find_quadrant(point_a, point_b) -> int:
 
     if(point_a[0] < point_b[0] and point_a[1] < point_b[1]):
@@ -39,21 +41,30 @@ def find_quadrant(point_a, point_b) -> int:
         return 3
     else:
         return -1
-        
+
+
+#Interamos sobre N-1 vezes, suficiente para decidir se o ponto é atingido em 1, 2, 3 ... N-1 ativações dos atratores
 for i in range(N-1):
+    #Testando sempre se o ponto que eu estou é o ponto colocado no problema
     if(points[i][0] == x and points[i][1] == y):
         print(i)
         break
 
+    #Calculamos o quadrante do ponto alvo em relação ao ponto atual
     quadrant = find_quadrant([x,y], points[i])
     if(quadrant == -1):
         print(N)
         break
 
+    #O ponto atual é atualizado com o devolve_metadinha, colocando ele no proximo indice e assim por diante. 
+    #Cada ponto proximo será calculado com base no ponto anterior
     points[i+1] = devolve_metadinha(points[i], quadrant, step)
+
+    #O passo de calcular o próximo ponto vai diminuindo a cada iteração, como observado empiricamente
     if(step[0] != 1 and step[1] != 1):
         step = [step[0]//2, step[1]//2]
 
+#Como não chegamos a testar na ultima iteração, aqui está ela
 if(points[N-1][0] == x and points[N-1][1] == y):
     print(N-1)
 
