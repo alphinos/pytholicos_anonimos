@@ -1,36 +1,44 @@
 
 n, A, B = map(int, input().split())
 
-coords = [[0,0] for i in range(n)]
-freqs = [1 for i in  range(n)]
+x = [0 for i in range(n+2)]
+y = [0 for i in range(n+2)]
 
-for i in range(n):
-    a, b = map(int, input().split())
-    coords[i][0] = a
-    coords[i][1] = b
 
-for i in range(n):
-    mA = coords[i][1]/(coords[i][0]-A)
-    mB = coords[i][1]/(coords[i][0]-B)
+x[0] = A
+x[1] = B
 
-    bA = -mA*A
-    bB = -mB*B
 
-    print(f"A equacao de A eh: y = {mA}x + {bA}")
-    print(f"A equacao de B eh: y = {mB}x + {bB}")
 
-    for j in range(n):
-        if(coords[j][1] < mB*coords[j][0]+bB and coords[j][1] > mA*coords[j][0] + bA and coords[j][0] != coords[i][0] and coords[j][1] != coords[i][1]):
-            freqs[i] += 1
+def coeficiente_angular(Ancora, pma, pme):
+    return (y[pme] - y[Ancora]) * (x[pma] - x[Ancora]) < (y[pma] - y[Ancora]) * (x[pme] - x[Ancora]) 
+
+
+def inside(pma, pme) -> bool:
+    return coeficiente_angular(0, pma, pme) and coeficiente_angular(1, pma, pme) and y[pma] != y[pme] and coeficiente_angular(1,0,pme)
+
+for i in range(2, n+2):
+    x_p, y_p = map(int, input().split())
+
+    x[i] = x_p
+    y[i] = y_p
+
+
+freqs = [1 for i in range(n+2)]
+
+for i in range(2, n+2):
+    for j in range(2, n+2):
+        if i != j:
+            if( inside(i, j) == True):
+                freqs[i] += 1
+
+
+maior = freqs[2]
+
+for i in range(2, n+2):
+    if freqs[i] > maior:
+        maior = freqs[i]
     
+print(maior)
 
 
-
-maior_freqs = freqs[0]
-
-# print(freqs)
-
-# for i in range(1, n):
-#     if freqs[i] > maior_freqs:
-#         maior_freqs = freqs[i]
-    
