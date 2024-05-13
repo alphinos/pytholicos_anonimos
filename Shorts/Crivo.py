@@ -30,15 +30,17 @@ f.close()
 
 #CArlkos ficou LOKO
 
-# def marca_primos( i, j, N, tam_primos, mark, primos ):
-#     if i * primos[ j ] >= N:
-#         return
+def marca_primos( i, j, N, tam_primos, mark, primos ):
+    if i * primos[ j ] >= N:
+        return
 
-#     marca_primos( i, j + 1, tam_primos, mark, primos )
+    mark[ i * primos[ j ] ]
 
-# def primo( i, N, mark, primos ):
-#     if i == N:
-#         return
-#     if mark[ i ] == 0:
-#         primos.append( i )
+    marca_primos( i, j + 1, tam_primos, mark, primos )
+
+def primo( i, N, mark, primos ):
+    if i == N:
+        return
+    if mark[ i ] == 0:
+        primos.append( i )
     
