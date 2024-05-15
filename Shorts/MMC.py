@@ -1,4 +1,5 @@
-import time
+from time import perf_counter
+
 
 #Algoritmo para Calcular o MMC entre dois numeros
 def MMC_N2(A, B):
@@ -33,7 +34,7 @@ def MMC_NN():
     tam_n = len(numbers)
     bases = [1 for i in range(tam_n)]
 
-    begin = time.time()
+    begin = perf_counter()
     while numbers != bases:
 
         todos_dividem = True
@@ -50,7 +51,7 @@ def MMC_NN():
             
             
         factor += 1
-    end = time.time()
+    end = perf_counter()
     print(f"Tempo MMC_3 eh : {end - begin} segundos")
     return mmc
                   
@@ -61,23 +62,22 @@ def MMC_NN2():
 
     numbers = list(map(int, input().split()))
     tam_n = len(numbers)
-    bases = [1 for i in range(tam_n)]
 
-    begin = time.time()
+    begin = perf_counter()
     for i in range(tam_n):
         mmc = MMC_N2(mmc, numbers[i])
-    end = time.time()
+    end = perf_counter()
     print(f"Tempo MMC_2_3 eh : {end - begin} segundos")
     return mmc
 
 
 
 
-    
-                
 
-
-                
+print(MMC_NN())
+print(MMC_NN2())
+#Usar como Teste
+#10000 37461874564 16253261325 62352636
 
 
 
