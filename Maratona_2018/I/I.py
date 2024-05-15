@@ -4,6 +4,8 @@ lampadas = [0 for i in range(L)]
 
 on_lamps = list(map(int, input().split()))
 
+off_lamps = [0 for i in range(L)]
+
 for i in range(1, on_lamps[0]+1):
     lampadas[on_lamps[i]-1] = 1
 
@@ -21,13 +23,6 @@ def change_lamps(modify, lamps):
         index = modify[i]
         lamps[index-1] = (lamps[index-1]+1)%2
 
-def compara_vetor(a, b):
-    tam = len(a)
-    for i in range(tam):
-        if a[i] != b[i]:
-            return False
-    
-    return True
 
 i = 1
 
@@ -40,7 +35,7 @@ lamps_states[i].append([l for l in lampadas])
 
 i += 1
 
-while compara_vetor(lampadas, [0 for i in range(L)]) == False:
+while lampadas != off_lamps:
     if i > I:
         i = i%I
     change_lamps(on_function[i], lampadas)
