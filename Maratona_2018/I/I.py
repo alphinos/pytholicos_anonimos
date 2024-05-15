@@ -24,10 +24,15 @@ def change_lamps(modify, lamps):
 
 i = 1
 
-contador = 0
+contador = 1
 impossible = False
 
 print(lampadas)
+
+change_lamps(on_function[i], lampadas)
+lamps_states[i].append([l for l in lampadas])
+
+i += 1
 
 while lampadas != [0,0,0]:
     if i > I:
