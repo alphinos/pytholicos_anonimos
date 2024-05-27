@@ -1,35 +1,27 @@
-from math import sqrt
+def ehDespojado(N):
+    i=2
+    stat=True 
+    while i*i<=N:  
+        if(N%(i*i)==0):
+            return False
+        if(N%i==0):
+            stat=False
+        i+=1
+    return not stat
 
-PRIMOS = [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37,
-          41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 ]
-
-despojados = set()
-
-N = int( input() )
-
-N_sqrt = int( sqrt( N ) )
+N= int(input())
 
 
-
-for i, pi in enumerate( PRIMOS ):
-    curr = pi
-    despojados.add( curr )
-    for pj in PRIMOS[ i : ]:
-        curr *= pj
-        if not ( curr * pj > N_sqrt ):
-            despojados.add( curr )
-        for pk in PRIMOS[ i + 1 : ]:
-            if not ( curr * pk > N_sqrt ):
-                despojados.add( curr * pk )
-
-print( len( despojados ) )
-
-divs = set()
-for i in range( 1, N_sqrt ):
-    if N % i == 0:
-        divs.add( i )
-        divs.add( N % i )
-
-res = despojados.intersection( divs )
-
-print( len( res ) )
+i=1
+cont=0
+while(i*i<=N):
+    if(N%i==0):
+        outro_divisor=N//i
+        if(outro_divisor!=i and ehDespojado(outro_divisor)):
+            cont+=1    
+        if(ehDespojado(i)):
+            
+            cont+=1
+    i+=1
+print(cont)
+     
