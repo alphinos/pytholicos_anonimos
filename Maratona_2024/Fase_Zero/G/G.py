@@ -45,7 +45,7 @@ class Vertice:
         self.coord = x
         self.energy = y
         self.adj = []
-        self.paradas = 0
+        self.paradas = -1
     
     def imprime(self):
         print(f"X: {self.coord}, E: {self.energy}, ADJ:{self.adj}")
@@ -77,6 +77,7 @@ def bfs(grafo, vertice):
 
     fila= deque()
     fila.append(grafo[vertice])
+    grafo[0].paradas = 0
     Energia = 0
     while fila:
         w = fila.popleft()
@@ -87,13 +88,20 @@ def bfs(grafo, vertice):
         
         for i in range(tam): 
             if Energia - (grafo[w.adj[i]].coord-w.coord) >= 0:
-                fila.append(grafo[w.adj[i]])
-                grafo[w.adj[i]].paradas += 1
+                if w.paradas != grafo[w.adj[i]].paradas:
+                    fila.append(grafo[w.adj[i]])
+                    grafo[w.adj[i]].paradas = w.paradas + 1
     
     return -1
 print(bfs(points, 0))
-        
+'''
+6 11
+3 8 15 25 30 45
+12 5 15 20 15 12
 
+Deveria retornar 3
+Atualmente retorna 1
+'''    
 
             
 
