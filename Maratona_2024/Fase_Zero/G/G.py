@@ -1,5 +1,5 @@
 
-
+'''
 N, Energia = map(int, input().split())
 
 distancias = list(map(int, input().split()))
@@ -35,3 +35,68 @@ if ponteiro == N:
 
 else:
     print(-1)
+
+'''
+
+from collections import deque
+
+class Vertice:
+    def __init__(self, x, y):
+        self.coord = x
+        self.energy = y
+        self.adj = []
+        self.paradas = 0
+    
+    def imprime(self):
+        print(f"X: {self.coord}, E: {self.energy}, ADJ:{self.adj}")
+    
+points = []
+N, Energia = map(int, input().split())
+
+vertice_zero = Vertice(0,Energia)
+for i in range(N):
+    vertice_zero.adj.append(i+1)
+
+points.append(vertice_zero)
+distancias = list(map(int, input().split()))
+tabacos = list(map(int, input().split()))
+
+
+for i in range(N):
+    v = Vertice(distancias[i], tabacos[i])
+    for i in range(i+2, N+1):
+        v.adj.append(i)
+
+    points.append(v)
+
+for k in range(N+1):
+    points[k].imprime()
+
+
+def bfs(grafo, vertice):
+
+    fila= deque()
+    fila.append(grafo[vertice])
+    Energia = 0
+    while fila:
+        w = fila.popleft()
+        Energia = w.energy
+        tam = len(w.adj)
+        if Energia - (grafo[N].coord-w.coord) >= 0:
+            return w.paradas
+        
+        for i in range(tam): 
+            if Energia - (grafo[w.adj[i]].coord-w.coord) >= 0:
+                fila.append(grafo[w.adj[i]])
+                grafo[w.adj[i]].paradas += 1
+    
+    return -1
+print(bfs(points, 0))
+        
+
+
+            
+
+
+
+
