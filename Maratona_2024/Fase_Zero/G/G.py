@@ -69,8 +69,8 @@ for i in range(N):
 
     points.append(v)
 
-for k in range(N+1):
-    points[k].imprime()
+# for k in range(N+1):
+#     points[k].imprime()
 
 
 def bfs(grafo, vertice):
